@@ -1,0 +1,66 @@
+Nume, Prenume: TERENTE ANDREI-ALEXANDRU
+Grupa: 325 CA
+IOCLA. README
+
+Detalii legate de implementare:
+
+> Valabile pt. toate task-urile:
+	- pt. parcurgerea sirurilor am folosit registrul ESI pe post de offset/index
+	
+	- in functii, am folosit registrul ECX pt. a retine adresa de inceput a 
+	sirului de descifrat
+
+
+
+> Task 1:
+	- am determinat adresa cheia printr-o parcurgele a sirului de input pana la
+	intalnirea caractereului '\0'. Urmatorul index dupa aceasta identificare
+	reprezentand inceputul sirului cheie
+
+	- pt. a descifra sirul am efectuat operatia XOR intre fiecare caracter din
+	sirul de descifrat si caracterul de pe pozitia corespunzatoare din sirul
+	cheie
+
+> Task 2:
+	- pt. a descifra sirul  am efectuat la fiecare pas operatia XOR intre
+	caracterul curent si cel precedent acestuia.
+
+	- la fiecare pas este retinul caracterul curent nedescifrat pt. a putea
+	fi folosit in descifrarea urmatorului caracter
+
+> Task 5:
+	- se incearca multiple chei in scopul determinarii mesajului, prima cheie
+	fiind = 0, cele ce o urmeaza fiind incrementari cu 1 ale cheii
+	precedente (un procedeu rezonabil deoarece dimensiunea cheii este de doar
+	un octet)
+
+	- pt. fiecare cheie se incepe descifrarea fiecarui caracter din sirul de
+	input (la fel ca la Task 1).
+
+	- stiind ca mesajul constituie o propozitie in limba engleza, la
+	intalnirea unui caracter ce nu ar putea face parte dintr-o astfel
+	de constructie(cod_ASCII_caracter < 32 sau cod_ASCII_caracter > 126),
+	se renunta la continuarea decriptarii cu cheia curenta, intrucat
+	se considera gresita
+
+	- in cazul in care descifrarea nu a produs niciun caracter considerat
+	gresit (pe baza rationamentului anterior), ma folosesc de informatia
+	data in cerinta (propozitia contine cuvantul "force") pt. a identifica
+	daca cheia este intr-adevar corecta
+
+> Task 6:
+	(Rationament, intrucat implementarea nu trece testul, greseala se afla
+	la construirea key_string-ului prin concatenarea cheii)
+	- se parcurg atat sirul cat si cheia (se retin index_sir si index_cheie)
+	- daca caracterul din sir este non alfabetic:
+		- sir_cheie[index_sir] = sir[index_sir]
+		- index_sir++
+	- altfel:
+		- index_cheie = index_cheie % lungime_cheie
+		- sir_cheie[index_sir] = cheie[index_cheie]
+		- index_cheie++
+		- index_sir++
+
+	- dupa acest pas, descifrarea este realizata ca in cerinta
+
+	
